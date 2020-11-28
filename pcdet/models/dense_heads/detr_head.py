@@ -36,7 +36,7 @@ class DetrHead(nn.Module):
 
         self.forward_ret_dict = {}
 
-        self.matcher = build_matcher(model_cfg.matcher)
+        self.matcher = build_matcher(model_cfg.MATCHER)
 
         self.weight_dict = {'loss_ce': model_cfg.LOSS_CONFIG.LOSS_WEIGHTS['CE_COEF'],
                        'loss_bbox': model_cfg.LOSS_CONFIG.LOSS_WEIGHTS['BBOX_COEF']}
