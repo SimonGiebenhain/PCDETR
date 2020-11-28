@@ -101,7 +101,7 @@ MODEL:
             LOSS_WEIGHTS: {
                 'CE_COEF': 1.0,
                 'BBOX_COEF': 2.0,
-                'EOS_EOEF': 0.15
+                'EOS_COEF': 0.15
             }
 
 
