@@ -52,7 +52,7 @@ class DetrHead(nn.Module):
         losses = ['labels', 'boxes', 'cardinality']
 
         self.criterion = SetCriterion(num_class, matcher=self.matcher, weight_dict=self.weight_dict,
-                                 eos_coef=model_cfg.LOSS_CONFIG.EOS_COEF, losses=losses)
+                                 eos_coef=model_cfg.LOSS_CONFIG['EOS_COEF'], losses=losses)
         self.criterion.cuda() #TODO do this properly
 
         #TODO do i need to push all model components to device?
