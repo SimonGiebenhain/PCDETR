@@ -129,7 +129,7 @@ class DetrHead(nn.Module):
         loss_dict = self.criterion(self.forward_ret_dict)
         losses = sum(loss_dict[k] * self.weight_dict[k] for k in loss_dict.keys() if k in self.weight_dict)
         tb_dict = {}
-        for (k, v) in loss_dict:
+        for (k, v) in loss_dict.items():
             tb_dict[k] = v.item()
         tb_dict['total_loss'] = losses.item()
         return losses, tb_dict
