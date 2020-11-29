@@ -89,7 +89,7 @@ class DetrHead(nn.Module):
         print('Spatial Features 2D:')
         print(spatial_features_2d.shape)
 
-        [nb, nx, ny, _] = spatial_features_2d.shape
+        [nb, _, nx, ny] = spatial_features_2d.shape
         # generate positional embedding
         pos = get_sine_embed(nb, nx, ny, self.num_pos_embedding, DEFAULT_TEMPERATURE, spatial_features_2d.device)
 
