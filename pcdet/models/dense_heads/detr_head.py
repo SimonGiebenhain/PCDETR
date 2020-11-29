@@ -109,7 +109,7 @@ class DetrHead(nn.Module):
             self.forward_ret_dict['aux_outputs'] = self._set_aux_loss(outputs_class, outputs_coord)
 
         if self.training:
-            self.forward_ret_dict.update(data_dict['gt_boxes'])
+            self.forward_ret_dict['gt_boxes'] = data_dict['gt_boxes']
             print('Gt bpxes:')
             print(data_dict['gt_boxes'].shape)
 
