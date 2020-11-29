@@ -81,7 +81,7 @@ MODEL:
           NUM_QUERIES: 50
 
         TRANSFORMER:
-          HIDDEN_DIM: 128
+          HIDDEN_DIM: 256
           DROPOUT: 0.1
           NHEADS: 8
           DIM_FEEDFORWARD: 256
