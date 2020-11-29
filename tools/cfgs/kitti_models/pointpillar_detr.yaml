@@ -85,8 +85,8 @@ MODEL:
           DROPOUT: 0.1
           NHEADS: 8
           DIM_FEEDFORWARD: 256
-          NUM_ENCODER_LAYERS: 4
-          NUM_DECODER_LAYERS: 4
+          NUM_ENCODER_LAYERS: 5
+          NUM_DECODER_LAYERS: 5
           NORMALIZE_BEFORE: True
 
         USE_AUX_LOSS: True
@@ -124,4 +124,4 @@ OPTIMIZATION:
     LR_WARMUP: False
     WARMUP_EPOCH: 1
 
-    GRAD_NORM_CLIP: 0.1 #TODO in DETR they use 0.01
+    GRAD_NORM_CLIP: 5 #TODO in DETR they use 0.01
