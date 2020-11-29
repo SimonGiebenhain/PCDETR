@@ -86,8 +86,8 @@ class DetrHead(nn.Module):
         """
 
         spatial_features_2d = data_dict['spatial_features_2d']
-        print('Spatial Features 2D:')
-        print(spatial_features_2d.shape)
+        #print('Spatial Features 2D:')
+        #print(spatial_features_2d.shape)
 
         [nb, _, nx, ny] = spatial_features_2d.shape
         # generate positional embedding
@@ -95,8 +95,8 @@ class DetrHead(nn.Module):
 
         # flattening of spatial_features_2d happens inside transformer
         hs = self.transformer(self.input_proj(spatial_features_2d), self.query_embed.weight, pos)[0]
-        print('Tansformer Output')
-        print(hs.shape)
+        #print('Tansformer Output')
+        #print(hs.shape)
 
 
         outputs_class = self.class_embed(hs)
@@ -110,8 +110,8 @@ class DetrHead(nn.Module):
 
         if self.training:
             self.forward_ret_dict['gt_boxes'] = data_dict['gt_boxes']
-            print('Gt bpxes:')
-            print(data_dict['gt_boxes'].shape)
+            #print('Gt bpxes:')
+            #print(data_dict['gt_boxes'].shape)
 
         #TODO when not training: generate bboxes here and add to data_dict, but check out AnchorHeadSingle as template
 
