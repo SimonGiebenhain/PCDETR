@@ -63,9 +63,9 @@ MODEL:
 
     BACKBONE_2D:
         NAME: BaseBEVBackbone
-        LAYER_NUMS: [3, 5, 5]
-        LAYER_STRIDES: [2, 2, 2]
-        NUM_FILTERS: [64, 128, 256]
+        LAYER_NUMS: [3, 3, 3, 3]
+        LAYER_STRIDES: [2, 2, 2, 2]
+        NUM_FILTERS: [64, 128, 256, 256]
         UPSAMPLE_STRIDES: []
         NUM_UPSAMPLE_FILTERS: []
 
