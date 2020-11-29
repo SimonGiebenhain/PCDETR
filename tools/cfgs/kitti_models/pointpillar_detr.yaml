@@ -110,7 +110,7 @@ OPTIMIZATION:
     NUM_EPOCHS: 120
 
     OPTIMIZER: adam_onecycle #TODO maybe adamW
-    LR: 0.003
+    LR: 0.0001
     WEIGHT_DECAY: 0.01
     MOMENTUM: 0.9
 
