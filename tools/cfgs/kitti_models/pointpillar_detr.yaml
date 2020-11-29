@@ -63,7 +63,7 @@ MODEL:
 
     BACKBONE_2D:
         NAME: BaseBEVBackbone
-        LAYER_NUMS: [3, 3, 3, 3]
+        LAYER_NUMS: [5, 5, 3, 3]
         LAYER_STRIDES: [2, 2, 2, 2]
         NUM_FILTERS: [64, 128, 256, 256]
         UPSAMPLE_STRIDES: []
@@ -78,7 +78,7 @@ MODEL:
         #DIR_LIMIT_OFFSET: 0.0
         #NUM_DIR_BINS: 2
         DETR:
-          NUM_QUERIES: 50
+          NUM_QUERIES: 75
 
         TRANSFORMER:
           HIDDEN_DIM: 256
@@ -101,7 +101,7 @@ MODEL:
             LOSS_WEIGHTS: {
                 'CE_COEF': 1.0,
                 'BBOX_COEF': 2.0,
-                'EOS_COEF': 0.15
+                'EOS_COEF': 0.25
             }
 
 
@@ -124,4 +124,4 @@ OPTIMIZATION:
     LR_WARMUP: False
     WARMUP_EPOCH: 1
 
-    GRAD_NORM_CLIP: 5 #TODO in DETR they use 0.01
+    GRAD_NORM_CLIP: 0.01 #TODO in DETR they use 0.01
