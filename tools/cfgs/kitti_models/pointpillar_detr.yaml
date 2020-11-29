@@ -90,7 +90,7 @@ MODEL:
           NORMALIZE_BEFORE: True
 
         USE_AUX_LOSS: True
-        NUM_POS_EMBEDDING: 64
+        NUM_POS_EMBEDDING: 128
 
         MATCHER:
           COST_CLASS: 1.0
