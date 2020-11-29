@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 import torch.nn as nn
+import math
 
 
 class BaseBEVBackbone(nn.Module):
@@ -12,6 +13,11 @@ class BaseBEVBackbone(nn.Module):
             assert len(self.model_cfg.LAYER_NUMS) == len(self.model_cfg.LAYER_STRIDES) == len(self.model_cfg.NUM_FILTERS)
             layer_nums = self.model_cfg.LAYER_NUMS
             layer_strides = self.model_cfg.LAYER_STRIDES
+            self.keeps_resolution = True
+            for i in range(len(layer_strides)):
+                if layer_strides[i] != 1:
+                    self.keeps_resolution = False
+                    break
             num_filters = self.model_cfg.NUM_FILTERS
         else:
             layer_nums = layer_strides = num_filters = []
@@ -68,6 +74,16 @@ class BaseBEVBackbone(nn.Module):
                         nn.ReLU()
                     ))
 
+        if len(self.deblocks) > 0:
+            downsamlpe_factor = 1
+            for i in range(len(layer_strides)):
+                downsamlpe_factor *= layer_strides[i]
+            upsample_factor = 1
+            for i in range(len(upsample_strides)):
+                upsample_factor *= upsample_strides[i]
+            if downsamlpe_factor == upsample_factor:
+                self.keeps_resolution = True
+
         c_in = sum(num_upsample_filters)
         if len(upsample_strides) > num_levels:
             self.deblocks.append(nn.Sequential(
@@ -96,16 +112,17 @@ class BaseBEVBackbone(nn.Module):
             ret_dict['spatial_features_%dx' % stride] = x
             if len(self.deblocks) > 0:
                 ups.append(self.deblocks[i](x))
-            else:
+            elif self.keeps_resolution:
                 ups.append(x)
 
-        if len(ups) > 1:
-            x = torch.cat(ups, dim=1)
-        elif len(ups) == 1:
-            x = ups[0]
+        if self.keeps_resolution:
+            if len(ups) > 1:
+                x = torch.cat(ups, dim=1)
+            elif len(ups) == 1:
+                x = ups[0]
 
-        if len(self.deblocks) > len(self.blocks):
-            x = self.deblocks[-1](x)
+            if len(self.deblocks) > len(self.blocks):
+                x = self.deblocks[-1](x)
 
         data_dict['spatial_features_2d'] = x
 
