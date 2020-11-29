@@ -122,7 +122,7 @@ class DetrHead(nn.Module):
         # this is a workaround to make torchscript happy, as torchscript
         # doesn't support dictionary with non-homogeneous values, such
         # as a dict having both a Tensor and a list.
-        return [{'pred_logits': a, 'pred_boxes': b}
+        return [{'cls_preds': a, 'box_preds': b}
                 for a, b in zip(outputs_class[:-1], outputs_coord[:-1])]
 
     def get_loss(self):
