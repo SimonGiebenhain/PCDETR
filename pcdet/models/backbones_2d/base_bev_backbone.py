@@ -98,7 +98,7 @@ class BaseBEVBackbone(nn.Module):
             self.num_bev_features = num_filters[-1]
 
         if not self.keeps_resolution:
-            for s in layer_strides:
+            for s in layer_strides[1:]:
                 self.grid_size[0] = int(self.grid_size[0] / s)
                 self.grid_size[1] = int(self.grid_size[1] / s)
 
