@@ -63,11 +63,11 @@ MODEL:
 
     BACKBONE_2D:
         NAME: BaseBEVBackbone
-        LAYER_NUMS: [3, 5, 5]
+        LAYER_NUMS: [3, 3, 5, 5]
         LAYER_STRIDES: [2, 2, 2]
-        NUM_FILTERS: [64, 128, 256]
-        UPSAMPLE_STRIDES: [1, 2, 4]
-        NUM_UPSAMPLE_FILTERS: [128, 128, 128]
+        NUM_FILTERS: [64, 128, 256, 512]
+        UPSAMPLE_STRIDES: [] #[1, 2, 4]
+        NUM_UPSAMPLE_FILTERS: [] #[128, 128, 128]
 
     DENSE_HEAD:
         NAME: AnchorHeadSingle
@@ -123,7 +123,7 @@ MODEL:
             LOSS_WEIGHTS: {
                 'cls_weight': 1.0,
                 'loc_weight': 2.0,
-                'dir_weight': 0.2,
+                'dir_weight': 0.0, #0.2,
                 'code_weights': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
             }
 
