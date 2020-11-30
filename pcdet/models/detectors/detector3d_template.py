@@ -352,6 +352,7 @@ class Detector3DTemplate(nn.Module):
         logger.info('==> Loading parameters from checkpoint %s to %s' % (filename, 'CPU' if to_cpu else 'GPU'))
         loc_type = torch.device('cpu') if to_cpu else None
         checkpoint = torch.load(filename, map_location=loc_type)
+        print(checkpoint)
         epoch = checkpoint.get('epoch', -1)
         it = checkpoint.get('it', 0.0)
 
