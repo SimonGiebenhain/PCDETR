@@ -5,9 +5,10 @@ import math
 
 
 class BaseBEVBackbone(nn.Module):
-    def __init__(self, model_cfg, input_channels):
+    def __init__(self, model_cfg, input_channels, grid_size):
         super().__init__()
         self.model_cfg = model_cfg
+        self.grid_size = grid_size
 
         if self.model_cfg.get('LAYER_NUMS', None) is not None:
             assert len(self.model_cfg.LAYER_NUMS) == len(self.model_cfg.LAYER_STRIDES) == len(self.model_cfg.NUM_FILTERS)
@@ -95,6 +96,12 @@ class BaseBEVBackbone(nn.Module):
             self.num_bev_features = c_in
         else:
             self.num_bev_features = num_filters[-1]
+
+        if not self.keeps_resolution:
+            for s in layer_strides:
+                self.grid_size[0] = int(self.grid_size[0] / s)
+                self.grid_size[1] = int(self.grid_size[1] / s)
+
 
     def forward(self, data_dict):
         """

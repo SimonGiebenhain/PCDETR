@@ -91,11 +91,15 @@ class Detector3DTemplate(nn.Module):
     def build_backbone_2d(self, model_info_dict):
         if self.model_cfg.get('BACKBONE_2D', None) is None:
             return None, model_info_dict
-
+        print(model_info_dict['grid_size'])
         backbone_2d_module = backbones_2d.__all__[self.model_cfg.BACKBONE_2D.NAME](
             model_cfg=self.model_cfg.BACKBONE_2D,
-            input_channels=model_info_dict['num_bev_features']
+            input_channels=model_info_dict['num_bev_features'],
+            grid_size=model_info_dict['grid_size']
         )
+        print('New grid SIZE:')
+        print(backbone_2d_module.grid_size)
+        model_info_dict['grid_size'] = backbone_2d_module.grid_size
         model_info_dict['module_list'].append(backbone_2d_module)
         model_info_dict['num_bev_features'] = backbone_2d_module.num_bev_features
         return backbone_2d_module, model_info_dict
