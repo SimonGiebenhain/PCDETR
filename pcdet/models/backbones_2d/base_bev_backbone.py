@@ -91,8 +91,10 @@ class BaseBEVBackbone(nn.Module):
                 nn.BatchNorm2d(c_in, eps=1e-3, momentum=0.01),
                 nn.ReLU(),
             ))
-
-        self.num_bev_features = c_in
+        if self.keeps_resolution:
+            self.num_bev_features = c_in
+        else:
+            self.num_bev_features = num_filters[-1]
 
     def forward(self, data_dict):
         """
