@@ -116,6 +116,11 @@ def main():
     if args.sync_bn:
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     model.cuda()
+    total_params = sum(p.numel() for p in model.parameters())
+    print('NUMBER OF PARAMS: {}'.format(total_params))
+    total_trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    print('NUMBER OF TRAINABLE PARAMS: {}'.format(total_trainable_params))
+
 
     optimizer = build_optimizer(model, cfg.OPTIMIZATION)
 

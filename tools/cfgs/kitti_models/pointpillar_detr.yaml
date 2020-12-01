@@ -63,9 +63,10 @@ MODEL:
 
     BACKBONE_2D:
         NAME: BaseBEVBackbone
-        LAYER_NUMS: [5, 5, 3, 3]
+        CKPT_PATH: '/mnt/openpcdet-pvc/PCDETR/output/cfgs/kitti_models/pointpillar2/default/ckpt/checkpoint_epoch_80.pth'
+        LAYER_NUMS: [3, 3, 5, 5]
         LAYER_STRIDES: [2, 2, 2, 2]
-        NUM_FILTERS: [64, 128, 256, 256]
+        NUM_FILTERS: [64, 128, 256, 512]
         UPSAMPLE_STRIDES: []
         NUM_UPSAMPLE_FILTERS: []
 
@@ -84,9 +85,9 @@ MODEL:
           HIDDEN_DIM: 256
           DROPOUT: 0.1
           NHEADS: 8
-          DIM_FEEDFORWARD: 256
-          NUM_ENCODER_LAYERS: 5
-          NUM_DECODER_LAYERS: 5
+          DIM_FEEDFORWARD: 512
+          NUM_ENCODER_LAYERS: 2
+          NUM_DECODER_LAYERS: 2
           NORMALIZE_BEFORE: True
 
         USE_AUX_LOSS: True

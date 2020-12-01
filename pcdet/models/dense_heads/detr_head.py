@@ -29,7 +29,7 @@ class DetrHead(nn.Module):
         self.class_embed = nn.Linear(hidden_dim, num_class + 1)
         self.bbox_embed = MLP(hidden_dim, hidden_dim, 7, 3)
         self.query_embed = nn.Embedding(self.num_queries, hidden_dim) #stores 'self.num_queries' vectors of dim 'hidden_dim'
-        self.input_proj = lambda x: x #nn.Conv2d(input_channels, hidden_dim, kernel_size=1) #reduce num channles of feature map
+        self.input_proj = nn.Conv2d(input_channels, hidden_dim, kernel_size=1) #reduce num channles of feature map
         #self.backbone = backbone
         self.aux_loss = model_cfg.get('USE_AUX_LOSS', DEFAULT_AUX_LOSS)
         self.num_pos_embedding = model_cfg.get('NUM_POS_EMBEDDING', DEFAULT_NUM_POS_EMBEDDING)
