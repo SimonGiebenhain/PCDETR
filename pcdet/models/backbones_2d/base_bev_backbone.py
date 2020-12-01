@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import math
+import re
 
 
 class BaseBEVBackbone(nn.Module):
@@ -103,7 +104,10 @@ class BaseBEVBackbone(nn.Module):
                 self.grid_size[1] = int(self.grid_size[1] / s)
 
         if 'CKPT_PATH' in model_cfg:
-            self.load_state_dict(torch.load(model_cfg.CKPT_PATH)['model_state'])
+            model_state = torch.load(model_cfg.CKPT_PATH)['model_state']
+            model_state = {re.sub(r'^.*?.', '.', k, 1): v for (k, v) in model_state.items() if "backbone" in k}
+            print(model_state.keys())
+            self.load_state_dict(model_state)
             for params in self.parameters():
                 params.requires_grad = False
 
