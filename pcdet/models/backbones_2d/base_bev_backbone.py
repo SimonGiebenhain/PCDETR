@@ -103,7 +103,7 @@ class BaseBEVBackbone(nn.Module):
                 self.grid_size[1] = int(self.grid_size[1] / s)
 
         if 'CKPT_PATH' in model_cfg:
-            self.load_state_dict(torch.load(model_cfg.CKPT_PATH))
+            self.load_state_dict(torch.load(model_cfg.CKPT_PATH)['model_state'])
             for params in self.parameters():
                 params.requires_grad = False
 
