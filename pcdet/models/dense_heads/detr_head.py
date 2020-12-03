@@ -22,7 +22,6 @@ class DetrHead(nn.Module):
     def __init__(self, model_cfg, input_channels, num_class, class_names, grid_size, point_cloud_range,
                  predict_boxes_when_training=True, **kwargs):
         super().__init__()
-        num_class = num_class + 1 #this has to do with the implementation of DETR, as class idx 0 is used for non-obj
         self.num_queries = model_cfg.DETR['NUM_QUERIES']
         self.transformer = build_transformer(model_cfg.TRANSFORMER)
         hidden_dim = self.transformer.d_model
@@ -39,8 +38,10 @@ class DetrHead(nn.Module):
         self.matcher = build_matcher(model_cfg.MATCHER)
 
         self.weight_dict = {'loss_ce': model_cfg.LOSS_CONFIG.LOSS_WEIGHTS['CE_COEF'],
-                       'loss_bbox': model_cfg.LOSS_CONFIG.LOSS_WEIGHTS['BBOX_COEF']}
-                       #'loss_giou': model_cfg.LOSS_CONFIG.LOSS_WEIGHTS['giou_loss_coef']}
+                            'loss_bbox': model_cfg.LOSS_CONFIG.LOSS_WEIGHTS['BBOX_COEF']}
+                            #'loss_giou': model_cfg.LOSS_CONFIG.LOSS_WEIGHTS['giou_loss_coef']}
+
+        self.first_time = True
 
         # TODO FARI: this is a hack
         if self.aux_loss:
@@ -128,6 +129,11 @@ class DetrHead(nn.Module):
     def get_loss(self):
         loss_dict = self.criterion(self.forward_ret_dict)
         losses = sum(loss_dict[k] * self.weight_dict[k] for k in loss_dict.keys() if k in self.weight_dict)
+        if self.first_time:
+            print(loss_dict.keys())
+            print(self.weight_dict.keys())
+            self.first_time = False
+        #TODO also include aux loss here if specified!!!
         tb_dict = {}
         for (k, v) in loss_dict.items():
             tb_dict[k] = v.item()

@@ -86,8 +86,8 @@ MODEL:
           DROPOUT: 0.1
           NHEADS: 8
           DIM_FEEDFORWARD: 1024
-          NUM_ENCODER_LAYERS: 2
-          NUM_DECODER_LAYERS: 2
+          NUM_ENCODER_LAYERS: 4
+          NUM_DECODER_LAYERS: 4
           NORMALIZE_BEFORE: True
 
         USE_AUX_LOSS: True
@@ -100,7 +100,7 @@ MODEL:
 
         LOSS_CONFIG:
             LOSS_WEIGHTS: {
-                'CE_COEF': 20.0,
+                'CE_COEF': 5.0,
                 'BBOX_COEF': 1.0,
                 'EOS_COEF': 0.25
             }

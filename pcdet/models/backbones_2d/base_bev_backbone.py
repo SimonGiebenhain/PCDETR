@@ -106,10 +106,10 @@ class BaseBEVBackbone(nn.Module):
         if 'CKPT_PATH' in model_cfg:
             model_state = torch.load(model_cfg.CKPT_PATH)['model_state']
             model_state = {k[k.index('.')+1:]: v for (k, v) in model_state.items() if "backbone" in k}
-            print(model_state.keys())
+            #print(model_state.keys())
             self.load_state_dict(model_state)
-            for params in self.parameters():
-                params.requires_grad = False
+            #for params in self.parameters():
+            #    params.requires_grad = False
 
 
 
