@@ -100,7 +100,7 @@ MODEL:
 
         LOSS_CONFIG:
             LOSS_WEIGHTS: {
-                'CE_COEF': 5.0,
+                'CE_COEF': 20.0,
                 'BBOX_COEF': 1.0,
                 'EOS_COEF': 0.25
             }
