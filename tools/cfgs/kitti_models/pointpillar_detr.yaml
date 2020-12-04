@@ -82,16 +82,16 @@ MODEL:
           NUM_QUERIES: 75
 
         TRANSFORMER:
-          HIDDEN_DIM: 256
+          HIDDEN_DIM: 360
           DROPOUT: 0.1
           NHEADS: 8
           DIM_FEEDFORWARD: 1024
-          NUM_ENCODER_LAYERS: 4
-          NUM_DECODER_LAYERS: 4
+          NUM_ENCODER_LAYERS: 6
+          NUM_DECODER_LAYERS: 6
           NORMALIZE_BEFORE: True
 
         USE_AUX_LOSS: True
-        NUM_POS_EMBEDDING: 128
+        NUM_POS_EMBEDDING: 180
 
         MATCHER:
           COST_CLASS: 1.0
@@ -102,7 +102,7 @@ MODEL:
             LOSS_WEIGHTS: {
                 'CE_COEF': 5.0,
                 'BBOX_COEF': 1.0,
-                'EOS_COEF': 0.25
+                'EOS_COEF': 0.1
             }
 
 
@@ -111,7 +111,7 @@ OPTIMIZATION:
     NUM_EPOCHS: 120
 
     OPTIMIZER: adam_onecycle #TODO maybe adamW
-    LR: 0.001
+    LR: 0.0075
     WEIGHT_DECAY: 0.01
     MOMENTUM: 0.9
 
@@ -125,4 +125,4 @@ OPTIMIZATION:
     LR_WARMUP: False
     WARMUP_EPOCH: 1
 
-    GRAD_NORM_CLIP: 0.01 #TODO in DETR they use 0.01
+    GRAD_NORM_CLIP: 0.02 #TODO in DETR they use 0.01
