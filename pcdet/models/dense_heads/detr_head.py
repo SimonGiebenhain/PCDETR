@@ -102,7 +102,7 @@ class DetrHead(nn.Module):
 
         outputs_class = self.class_embed(hs)
         outputs_coord = self.bbox_embed(hs).tanh() #TODO what should I scale this to
-        outputs_coord *= self.scale
+        outputs_coord = outputs_coord * self.scale
 
         # [-1] index extracts reults after final transformer-decoder layer
         self.forward_ret_dict['cls_preds'] = outputs_class[-1]
