@@ -66,9 +66,13 @@ def eval_single_ckpt(model, test_loader, args, output_dir, eval_output_dir,  log
         load_data_to_gpu(batch_dict)
         with torch.no_grad():
             pred_dicts = model(batch_dict)
+        print('GT BBOXES')
         print(batch_dict['gt_boxes'])
-        #print(pred_dicts)
-        print(pred_dicts.keys())
+        print('CLS PREDS')
+        print(pred_dicts['cls_preds'])
+        print('BBOX PREDS')
+        print(pred_dicts['box_preds'])
+        #print(pred_dicts.keys())
         if i > 5:
             break
 
