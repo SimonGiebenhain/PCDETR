@@ -108,6 +108,7 @@ def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_
                 save_checkpoint(
                     checkpoint_state(model, optimizer, trained_epoch, accumulated_iter), filename=ckpt_name,
                 )
+        play_single_ckpt(model, train_loader)
 
 
 def model_state_to_cpu(model_state):
@@ -145,3 +146,21 @@ def save_checkpoint(state, filename='checkpoint'):
 
     filename = '{}.pth'.format(filename)
     torch.save(state, filename)
+
+
+def play_single_ckpt(model, loader, dist_test=False):
+    # start evaluation
+    model.eval()
+    for i, batch_dict in enumerate(loader):
+        with torch.no_grad():
+            pred_dicts = model(batch_dict)
+        print('GT BBOXES')
+        print(batch_dict['gt_boxes'])
+        print('CLS PREDS')
+        print(pred_dicts['cls_preds'])
+        print('BBOX PREDS')
+        print(pred_dicts['box_preds'])
+        #print(pred_dicts.keys())
+        if i > 2:
+            break
+    model.train()
