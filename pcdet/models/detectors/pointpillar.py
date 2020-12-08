@@ -18,7 +18,7 @@ class PointPillar(Detector3DTemplate):
             }
             return ret_dict, tb_dict, disp_dict
         else:
-            return batch_dict
+            return self.dense_head.forward_ret_dict
             #pred_dicts, recall_dicts = self.post_processing(batch_dict)
             #return pred_dicts, recall_dicts
 
