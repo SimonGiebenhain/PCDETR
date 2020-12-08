@@ -27,6 +27,7 @@ class DetrHead(nn.Module):
         hidden_dim = self.transformer.d_model
         self.class_embed = nn.Linear(hidden_dim, num_class + 1)
         self.bbox_embed = MLP(hidden_dim, hidden_dim, 7, 3)
+        self.scale =  torch.tensor([69.12, 39.68, 3.0, 5.0, 5.0, 2.0, 2.0]).cuda()
         self.query_embed = nn.Embedding(self.num_queries, hidden_dim) #stores 'self.num_queries' vectors of dim 'hidden_dim'
         self.input_proj = nn.Conv2d(input_channels, hidden_dim, kernel_size=1) #reduce num channles of feature map
         #self.backbone = backbone
@@ -101,8 +102,7 @@ class DetrHead(nn.Module):
 
         outputs_class = self.class_embed(hs)
         outputs_coord = self.bbox_embed(hs).tanh() #TODO what should I scale this to
-        scale = torch.tensor([69.12, 39.68, 3, 5, 5, 2, 3])
-        outputs_coord *= scale
+        outputs_coord *= self.scale
 
         # [-1] index extracts reults after final transformer-decoder layer
         self.forward_ret_dict['cls_preds'] = outputs_class[-1]
