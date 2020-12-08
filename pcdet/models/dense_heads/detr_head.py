@@ -41,7 +41,6 @@ class DetrHead(nn.Module):
                             'loss_bbox': model_cfg.LOSS_CONFIG.LOSS_WEIGHTS['BBOX_COEF']}
                             #'loss_giou': model_cfg.LOSS_CONFIG.LOSS_WEIGHTS['giou_loss_coef']}
 
-        self.first_time = True
 
         # TODO FARI: this is a hack
         if self.aux_loss:
@@ -101,7 +100,9 @@ class DetrHead(nn.Module):
 
 
         outputs_class = self.class_embed(hs)
-        outputs_coord = self.bbox_embed(hs) #TODO what should I scale this to
+        outputs_coord = self.bbox_embed(hs).tanh() #TODO what should I scale this to
+        scale = torch.tensor([69.12, 39.68, 3])
+        outputs_coord *= scale
 
         # [-1] index extracts reults after final transformer-decoder layer
         self.forward_ret_dict['cls_preds'] = outputs_class[-1]
@@ -129,11 +130,7 @@ class DetrHead(nn.Module):
     def get_loss(self):
         loss_dict = self.criterion(self.forward_ret_dict)
         losses = sum(loss_dict[k] * self.weight_dict[k] for k in loss_dict.keys() if k in self.weight_dict)
-        if self.first_time:
-            print(loss_dict.keys())
-            print(self.weight_dict.keys())
-            self.first_time = False
-        #TODO also include aux loss here if specified!!!
+
         tb_dict = {}
         for (k, v) in loss_dict.items():
             tb_dict[k] = v.item()
