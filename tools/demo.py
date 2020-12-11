@@ -90,6 +90,7 @@ def main():
             data_dict = demo_dataset.collate_batch([data_dict])
             load_data_to_gpu(data_dict)
             pred_dicts = model.forward(data_dict)
+            print(pred_dicts)
             res.append({k: v.cpu().numpy() for (k, v) in pred_dicts.items()})
 
             #V.draw_scenes(
