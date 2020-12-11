@@ -83,20 +83,23 @@ def main():
     model.load_params_from_file(filename=args.ckpt, logger=logger, to_cpu=True)
     model.cuda()
     model.eval()
+    res = []
     with torch.no_grad():
         for idx, data_dict in enumerate(demo_dataset):
             logger.info(f'Visualized sample index: \t{idx + 1}')
             data_dict = demo_dataset.collate_batch([data_dict])
             load_data_to_gpu(data_dict)
-            pred_dicts, _ = model.forward(data_dict)
+            pred_dicts = model.forward(data_dict)
+            res.append({k: v.numpy() for (k, v) in pred_dicts.items()})
 
-            V.draw_scenes(
-                points=data_dict['points'][:, 1:], ref_boxes=pred_dicts[0]['pred_boxes'],
-                ref_scores=pred_dicts[0]['pred_scores'], ref_labels=pred_dicts[0]['pred_labels']
-            )
-            mlab.show(stop=True)
+            #V.draw_scenes(
+            #    points=data_dict['points'][:, 1:], ref_boxes=pred_dicts[0]['pred_boxes'],
+            #    ref_scores=pred_dicts[0]['pred_scores'], ref_labels=pred_dicts[0]['pred_labels']
+            #)
+            #mlab.show(stop=True)
 
     logger.info('Demo done.')
+    np.save('demo_results.npy', res)
 
 
 if __name__ == '__main__':
