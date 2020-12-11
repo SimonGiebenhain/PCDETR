@@ -92,7 +92,7 @@ def main():
             pred_dicts = model.forward(data_dict)
             res.append({'box_preds': pred_dicts['box_preds'].cpu().numpy(),
                         'cls_preds': pred_dicts['cls_preds'].cpu().numpy(),
-                        'points': data_dict['points'].cpu().numpy})
+                        'points': data_dict['points'][:, 1:]})
 
             #V.draw_scenes(
             #    points=data_dict['points'][:, 1:], ref_boxes=pred_dicts[0]['pred_boxes'],
