@@ -108,7 +108,7 @@ def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_
                 save_checkpoint(
                     checkpoint_state(model, optimizer, trained_epoch, accumulated_iter), filename=ckpt_name,
                 )
-        play_single_ckpt(model, train_loader)
+            play_single_ckpt(model, train_loader)
 
 
 def model_state_to_cpu(model_state):

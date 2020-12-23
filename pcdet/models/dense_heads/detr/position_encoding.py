@@ -6,7 +6,7 @@ import math
 import torch
 from torch import nn
 
-
+# TODO test this
 def get_sine_embed(nb, nx, ny, num_pos_feats, temperature, device):
     ax = torch.linspace(0, 2*math.pi, nx, dtype=torch.float32, device=device)
     ay = torch.linspace(0, 2*math.pi, ny, dtype=torch.float32, device=device)
